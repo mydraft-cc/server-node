@@ -1,0 +1,10 @@
+{
+  "name": "mydraftcc-nodejs-server",
+  "version": "1.0.0",
+  "description": "NodeJs Server For mydraftcc/ui",
+  "scripts": {
+    "populatepublicserver": "rsync -ravH ui/build/* server/public/"
+  },
+  "author": "damien HENRY - https://www.mytinydc.com",
+  "license": "MIT Licence"
+}

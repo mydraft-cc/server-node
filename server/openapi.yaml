@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  description: "Nodejs API server for https://mydraft.cc - UI"
+  title: "Mydraft Nodejs server"
+  contact:
+    website: www.mytinydc.com
+  license:
+    name: "MIT Licence"
+    url: "https://mit-license.org/"
+
+tags:
+- name: "manage"
+  description: "Load/Save draft"
+
+servers:
+  - url: 'http://localhost:4000'
+
+components:
+  schemas:
+    serverresponsestore:
+      type: object
+      properties:
+        writeToken:
+          type: string
+        readToken:
+          type: string
+
+    internalerror:
+      type: object
+      properties:
+        error:
+          type: string
+    
+    diagrammestructure:
+      type: array
+      items:
+        type: object
+
+paths:
+  /:
+    post:
+      tags:
+        - "manage"
+      summary: "Store new draft document"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/diagrammestructure'
+            examples:
+              JsonOK:
+                value: [{"type":"diagram/add","payload":{"diagramId":"f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a","timestamp":1654256184083}},{"type":"items/addVisual","payload":{"diagramId":"f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a","timestamp":1654256186400,"shapeId":"82170ec5-2cc5-c0f2-1414-38e8e477dd01","renderer":"Button","position":{"x":199.5,"y":119.30000305175781}}}]
+              badFormat: 
+                value: 'This is not JSON format'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/serverresponsestore'
+
+        "500":
+          description: "Server Internal ERROR"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalerror'
+      security: []    # no authentication
+
+  /{tokenToRead}/{tokenToWrite}:
+    put:
+      tags:
+      - "manage"
+      summary: "Update draft document"
+      parameters:
+      - name: "tokenToRead"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+        examples:
+          GoodId:
+            value: 'f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a'
+          WronId:
+            value: 'not the good id'
+      - name: "tokenToWrite"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+        examples:
+          GoodId:
+            value: 'f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a'
+          WronId:
+            value: 'not the good id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/diagrammestructure'
+            examples:
+              JsonOK:
+                value: [{"type":"diagram/add","payload":{"diagramId":"f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a","timestamp":1654256184083}},{"type":"items/addVisual","payload":{"diagramId":"f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a","timestamp":1654256186400,"shapeId":"82170ec5-2cc5-c0f2-1414-38e8e477dd01","renderer":"Button","position":{"x":199.5,"y":119.30000305175781}}}]
+              badFormat: 
+                value: 'This is not JSON format'          
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/serverresponsestore'
+        "400":
+          description: "probleme with body content JSON structure"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalerror'
+        "500":
+          description: "Server Internal ERROR"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalerror'
+      security: []    # no authentication
+
+  /get/{diagramID}:
+    get:
+      tags:
+      - "manage"
+      summary: "return JSON Object"
+      parameters:
+      - name: "diagramID"
+        in: "path"
+        description: "diagramme ID"
+        required: true
+        schema:
+          type: "string"
+        examples:
+          GoodId:
+            value: 'f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a'
+          WronId:
+            value: 'not the good id'
+          RunDir:
+            value: '../f9e48fc9-da3d-aa39-1ab5-0641b0a0f59a'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/diagrammestructure'
+        "500":
+          description: "Server Internal ERROR"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internalerror'
+      security: []    # no authentication
+
+
+
+
