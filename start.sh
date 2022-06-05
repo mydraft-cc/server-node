@@ -1,1 +1,2 @@
-/usr/bin/nodejs app.js
+#!/bin/bash
+cd server && npm install && ./start.sh
