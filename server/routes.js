@@ -8,7 +8,6 @@ const router = express.Router();
 const HelperXhr = require("HelperXhr");
 const Libsecurity = require("Libsecurity");
 const fs = require("fs");
-const path = require("path");
 
 //Dir storage
 const datadir = __dirname + "/data";
