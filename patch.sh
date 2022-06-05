@@ -6,7 +6,7 @@
 #              So default is keeping, to remove from source, execute : 
 #              ./patch.sh "optional"
 ##############################################################
-
+echo "Option $1"
 echo "[INFO]Starting applying patches..."
 
 ## required for nodejs-server
