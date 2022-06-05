@@ -11,6 +11,8 @@ NODEJS="/usr/bin/nodejs"
 if [ ! -f "$NODEJS" ];then
     NODEJS="/usr/bin/node"
 fi
+
+npm install
 ## Start application
 # Parameters
 # listening ip address
