@@ -15,11 +15,10 @@ FROM alpine:latest as main
 RUN apk add --no-cache nodejs npm
 COPY --from=builder /mydraftcc-nodejs-server/server /
 COPY --from=builder /mydraftcc-nodejs-server/ui/build /public
-RUN npm install
+# install and volumes mounpoint logs data
+RUN npm install \
+    && mkdir /data /logs
 
-# Volumes mounpoint
-RUN mkdir /data /logs
-##VOLUME logs data
 # run with user/group 1000
 USER 1000:1000
 # exposed port
