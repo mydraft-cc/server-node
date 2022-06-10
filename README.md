@@ -16,10 +16,15 @@ Legacy or Docker
 ### Legacy
 
 ```
+# get sources
+git clone https://github.com/mydraft-cc/server-node.git --recursive
+cd server-node
 # Required
 ./patch.sh
 # if you want to remove UserReport from the application :
-#./patch.sh "optional"
+# ./patch.sh "optional"
+# execute once only to install npm packages and to build ui
+cd ui && npm install && npm run build && mkdir ../server/{public,data} && cp -R build/* ../server/public/ && cd ..
 cd server && ./start.sh
 #You could set environment parameters in server/start.sh
 ```

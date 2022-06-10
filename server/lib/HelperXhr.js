@@ -19,7 +19,6 @@ class HelperXhr {
    */
   static setSettings(req) {
     let obj = {};
-    console.log(req);
     try {
       if (req.method.match(/POST|PUT/i)) {
         obj = Object.keys(req.body).length > 0 ? req.body : {};
