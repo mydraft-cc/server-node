@@ -22,7 +22,6 @@ router.post("/", async function (req, res, next) {
   try {
     //check data received
     let xhr = HelperXhr.setSettings(req);
-    console.log(xhr);
     if (Array.isArray(xhr) && xhr[0].payload.diagramId) {
       const id = xhr[0].payload.diagramId;
       if (id) {
